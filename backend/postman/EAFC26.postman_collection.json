@@ -23,11 +23,7 @@
               "mode": "raw",
               "raw": "{\n  \"name\": \"Regular User\",\n  \"email\": \"user@test.com\",\n  \"password\": \"Password123\"\n}"
             },
-            "url": {
-              "raw": "{{baseUrl}}/auth/register",
-              "host": ["{{baseUrl}}"],
-              "path": ["auth", "register"]
-            }
+            "url": "{{baseUrl}}/auth/register"
           }
         },
         {
@@ -44,11 +40,7 @@
               "mode": "raw",
               "raw": "{\n  \"name\": \"Admin User\",\n  \"email\": \"admin@test.com\",\n  \"password\": \"AdminPassword123\",\n  \"role\": \"admin\"\n}"
             },
-            "url": {
-              "raw": "{{baseUrl}}/auth/register",
-              "host": ["{{baseUrl}}"],
-              "path": ["auth", "register"]
-            }
+            "url": "{{baseUrl}}/auth/register"
           }
         },
         {
@@ -65,11 +57,7 @@
               "mode": "raw",
               "raw": "{\n  \"email\": \"user@test.com\",\n  \"password\": \"Password123\"\n}"
             },
-            "url": {
-              "raw": "{{baseUrl}}/auth/login",
-              "host": ["{{baseUrl}}"],
-              "path": ["auth", "login"]
-            }
+            "url": "{{baseUrl}}/auth/login"
           }
         }
       ]
@@ -82,25 +70,7 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/players?limit=10&page=1&sort=-ovr",
-              "host": ["{{baseUrl}}"],
-              "path": ["players"],
-              "query": [
-                {
-                  "key": "limit",
-                  "value": "10"
-                },
-                {
-                  "key": "page",
-                  "value": "1"
-                },
-                {
-                  "key": "sort",
-                  "value": "-ovr"
-                }
-              ]
-            }
+            "url": "{{baseUrl}}/players?limit=10&page=1&sort=-ovr"
           }
         },
         {
@@ -108,21 +78,7 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/search/players?q=salah&limit=5",
-              "host": ["{{baseUrl}}"],
-              "path": ["search", "players"],
-              "query": [
-                {
-                  "key": "q",
-                  "value": "salah"
-                },
-                {
-                  "key": "limit",
-                  "value": "5"
-                }
-              ]
-            }
+            "url": "{{baseUrl}}/search/players?q=salah&limit=5"
           }
         },
         {
@@ -130,17 +86,7 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/players/filter/youngsters?limit=5",
-              "host": ["{{baseUrl}}"],
-              "path": ["players", "filter", "youngsters"],
-              "query": [
-                {
-                  "key": "limit",
-                  "value": "5"
-                }
-              ]
-            }
+            "url": "{{baseUrl}}/players/filter/youngsters?limit=5"
           }
         },
         {
@@ -161,11 +107,7 @@
               "mode": "raw",
               "raw": "{\n  \"name\": \"New Talent\",\n  \"rank\": 1000,\n  \"ovr\": 82,\n  \"age\": 19,\n  \"preferredFoot\": \"Right\",\n  \"position\": \"CAM\",\n  \"team\": \"Real Madrid\",\n  \"league\": \"LaLiga\",\n  \"nation\": \"Spain\"\n}"
             },
-            "url": {
-              "raw": "{{baseUrl}}/players",
-              "host": ["{{baseUrl}}"],
-              "path": ["players"]
-            }
+            "url": "{{baseUrl}}/players"
           }
         }
       ]
@@ -183,17 +125,7 @@
                 "value": "Bearer {{adminToken}}"
               }
             ],
-            "url": {
-              "raw": "{{baseUrl}}/analytics/players/top-rated?limit=5",
-              "host": ["{{baseUrl}}"],
-              "path": ["analytics", "players", "top-rated"],
-              "query": [
-                {
-                  "key": "limit",
-                  "value": "5"
-                }
-              ]
-            }
+            "url": "{{baseUrl}}/analytics/players/top-rated?limit=5"
           }
         },
         {
@@ -206,17 +138,7 @@
                 "value": "Bearer {{adminToken}}"
               }
             ],
-            "url": {
-              "raw": "{{baseUrl}}/analytics/players/top-teams?limit=5",
-              "host": ["{{baseUrl}}"],
-              "path": ["analytics", "players", "top-teams"],
-              "query": [
-                {
-                  "key": "limit",
-                  "value": "5"
-                }
-              ]
-            }
+            "url": "{{baseUrl}}/analytics/players/top-teams?limit=5"
           }
         },
         {
@@ -229,11 +151,7 @@
                 "value": "Bearer {{adminToken}}"
               }
             ],
-            "url": {
-              "raw": "{{baseUrl}}/analytics/players/position-distribution",
-              "host": ["{{baseUrl}}"],
-              "path": ["analytics", "players", "position-distribution"]
-            }
+            "url": "{{baseUrl}}/analytics/players/position-distribution"
           }
         },
         {
@@ -241,11 +159,7 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/stats/players/count",
-              "host": ["{{baseUrl}}"],
-              "path": ["stats", "players", "count"]
-            }
+            "url": "{{baseUrl}}/stats/players/count"
           }
         },
         {
@@ -253,11 +167,7 @@
           "request": {
             "method": "GET",
             "header": [],
-            "url": {
-              "raw": "{{baseUrl}}/stats/players/average-rating",
-              "host": ["{{baseUrl}}"],
-              "path": ["stats", "players", "average-rating"]
-            }
+            "url": "{{baseUrl}}/stats/players/average-rating"
           }
         }
       ]
@@ -275,11 +185,7 @@
                 "value": "Bearer {{adminToken}}"
               }
             ],
-            "url": {
-              "raw": "{{baseUrl}}/admin/dashboard",
-              "host": ["{{baseUrl}}"],
-              "path": ["admin", "dashboard"]
-            }
+            "url": "{{baseUrl}}/admin/dashboard"
           }
         }
       ]
