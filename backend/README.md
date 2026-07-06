@@ -8,6 +8,11 @@ This is the backend API documentation for the **EAFC 26 Player Analytics API**. 
 
 ---
 
+### **📢 Status Update (July 2026)**
+* **Implemented:** **Player CRUD APIs using MVC Architecture** (Endpoints under `/players` for GET, POST, PATCH, DELETE are fully functional with async error handling and standard api response layout).
+
+---
+
 ## 🛠️ Project Setup & Installation
 
 ### **1. Prerequisites**

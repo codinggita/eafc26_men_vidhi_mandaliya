@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
+const playerRoutes = require("./src/routes/playerRoutes");
+const errorMiddleware = require("./src/middlewares/errorMiddleware");
 
 const app = express();
 
@@ -14,5 +16,11 @@ app.get("/", (req, res) => {
     message: "EAFC 26 Player Analytics API is running"
   });
 });
+
+// Mount routes
+app.use("/players", playerRoutes);
+
+// Global Error Handler Middleware
+app.use(errorMiddleware);
 
 module.exports = app;
