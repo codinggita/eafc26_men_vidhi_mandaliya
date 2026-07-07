@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+/* Custom global styles can go here */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #090a0f;
+  color: #f3f4f6;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
