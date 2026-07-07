@@ -1,12 +1,13 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Button from '@mui/material/Button';
 import { Toaster, toast } from 'react-hot-toast';
-import { FaUserPlus, FaSignInAlt, FaRunning, FaChartBar } from 'react-icons/fa';
+import { FaRunning, FaChartBar } from 'react-icons/fa';
+import DashboardLayout from './layouts/DashboardLayout';
 
 // Create dark MUI theme
 const darkTheme = createTheme({
@@ -29,8 +30,8 @@ const Home = () => {
   const notify = () => toast.success('Tailwind + MUI + Redux configured successfully!');
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center bg-slate-950 p-6">
-      <div className="max-w-md w-full bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl text-center space-y-6">
+    <div className="flex flex-col justify-center items-center p-6 min-h-[calc(100vh-10rem)]">
+      <div className="max-w-md w-full bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl text-center space-y-6 animate-fade-in">
         <div className="inline-flex p-4 bg-indigo-500/10 rounded-2xl text-indigo-500">
           <FaChartBar size={40} />
         </div>
@@ -50,7 +51,7 @@ const Home = () => {
         </div>
 
         <div className="pt-6 border-t border-slate-800 flex justify-around text-xs text-slate-500 font-mono">
-          <span>Vite + Tailwind v3</span>
+          <span>Vite + Tailwind v4</span>
           <span>MUI v5</span>
           <span>Redux Toolkit</span>
         </div>
@@ -66,7 +67,9 @@ const App = () => {
         <CssBaseline />
         <Router>
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<DashboardLayout />}>
+              <Route index element={<Home />} />
+            </Route>
           </Routes>
         </Router>
         <Toaster position="bottom-right" />
