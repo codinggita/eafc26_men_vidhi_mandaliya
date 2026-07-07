@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -8,6 +8,10 @@ import Button from '@mui/material/Button';
 import { Toaster, toast } from 'react-hot-toast';
 import { FaRunning, FaChartBar } from 'react-icons/fa';
 import DashboardLayout from './layouts/DashboardLayout';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import ProtectedRoute from './routes/ProtectedRoute';
+import PublicRoute from './routes/PublicRoute';
 
 // Create dark MUI theme
 const darkTheme = createTheme({
@@ -41,7 +45,7 @@ const Home = () => {
         </h1>
         
         <p className="text-slate-400 text-sm leading-relaxed">
-          Initial project structure initialized. React, Vite, Tailwind CSS, Material UI, Redux Toolkit, and Axios are successfully configured.
+          Authentication and protected routes have been successfully enabled! Welcome to the Player Analytics console.
         </p>
 
         <div className="flex justify-center gap-3">
@@ -67,9 +71,31 @@ const App = () => {
         <CssBaseline />
         <Router>
           <Routes>
-            <Route path="/" element={<DashboardLayout />}>
+            {/* Public Routes (only accessible if logged out) */}
+            <Route path="/login" element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            } />
+            <Route path="/register" element={
+              <PublicRoute>
+                <Register />
+              </PublicRoute>
+            } />
+
+            {/* Protected Routes (only accessible if logged in) */}
+            <Route path="/" element={
+              <ProtectedRoute>
+                <DashboardLayout />
+              </ProtectedRoute>
+            }>
               <Route index element={<Home />} />
+              {/* Other pages can be added as child routes when implemented */}
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Route>
+
+            {/* Catch-all fallback */}
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Router>
         <Toaster position="bottom-right" />
