@@ -95,6 +95,9 @@ const playerSlice = createSlice({
     clearPlayerError: (state) => {
       state.error = null;
     },
+    clearSelectedPlayer: (state) => {
+      state.selectedPlayer = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -140,5 +143,5 @@ const playerSlice = createSlice({
   },
 });
 
-export const { setFilters, setPage, resetFilters, clearPlayerError } = playerSlice.actions;
+export const { setFilters, setPage, resetFilters, clearPlayerError, clearSelectedPlayer } = playerSlice.actions;
 export default playerSlice.reducer;
