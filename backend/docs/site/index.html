@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EAFC 26 Player Analytics API Documentation</title>
+  
+  <!-- Modern Typography and Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div class="header-logo">
+      <i class="fa-solid fa-gamepad logo-icon"></i>
+      <div class="logo-text">
+        <h1>EAFC 26 Player Analytics</h1>
+        <span class="version-tag">v1.0.0</span>
+      </div>
+    </div>
+    
+    <div class="header-actions">
+      <!-- Base URL Configurer -->
+      <div class="base-url-wrapper">
+        <span class="url-label">Base URL:</span>
+        <input type="text" id="base-url-input" value="http://localhost:5000" placeholder="https://your-api-base-url.com">
+      </div>
+
+      <!-- Export Buttons -->
+      <button class="btn btn-secondary" id="btn-download-openapi" title="Download OpenAPI 3.0 Specification">
+        <i class="fa-solid fa-file-code"></i> <span>OpenAPI</span>
+      </button>
+      <button class="btn btn-secondary" id="btn-download-postman" title="Download Postman Collection">
+        <i class="fa-solid fa-circle-nodes"></i> <span>Postman</span>
+      </button>
+      
+      <!-- Theme Toggle -->
+      <button class="theme-toggle-btn" id="theme-toggle" title="Toggle Light/Dark Theme">
+        <i class="fa-solid fa-sun icon-sun"></i>
+        <i class="fa-solid fa-moon icon-moon"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Grid Wrapper -->
+  <div class="main-wrapper">
+    
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+      <!-- Search Input -->
+      <div class="sidebar-search">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" id="search-input" placeholder="Search 88 routes, tags, or keywords...">
+      </div>
+
+      <!-- Statistics Indicators -->
+      <div class="sidebar-stats">
+        <div class="stat-badge stat-all" title="Total APIs"><span id="stat-count-all">0</span> APIs</div>
+        <div class="stat-badge stat-get" title="GET APIs"><span id="stat-count-get">0</span> GET</div>
+        <div class="stat-badge stat-post" title="POST APIs"><span id="stat-count-post">0</span> POST</div>
+        <div class="stat-badge stat-patch" title="PATCH/PUT/DELETE APIs"><span id="stat-count-other">0</span> OTHER</div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="sidebar-nav">
+        <!-- Guides Group -->
+        <div class="nav-group active">
+          <div class="nav-group-title">
+            <i class="fa-solid fa-book"></i> Getting Started
+          </div>
+          <div class="nav-group-items">
+            <a href="#intro" class="nav-item active">Introduction</a>
+            <a href="#installation" class="nav-item">Installation</a>
+            <a href="#env-vars" class="nav-item">Environment Variables</a>
+            <a href="#auth-guide" class="nav-item">Authentication Guide</a>
+            <a href="#rate-limits" class="nav-item">Rate Limiting</a>
+            <a href="#errors" class="nav-item">Error Handling</a>
+            <a href="#val-rules" class="nav-item">Validation Rules</a>
+            <a href="#pagination-sorting-filtering" class="nav-item">Pagination, Sorting & Filtering</a>
+            <a href="#query-route-params" class="nav-item">Query & Route Parameters</a>
+            <a href="#status-codes" class="nav-item">Status Codes Reference</a>
+            <a href="#deployment" class="nav-item">Deployment Guide</a>
+          </div>
+        </div>
+
+        <!-- API Reference Groups (Injected Dynamically) -->
+        <div id="dynamic-nav-groups"></div>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="content-area">
+      <div class="content-container">
+
+        <!-- 1. Introduction -->
+        <section id="intro" class="doc-section active-section">
+          <div class="section-header">
+            <span class="pre-title">Documentation Overview</span>
+            <h2>1. Introduction</h2>
+          </div>
+          <div class="section-body">
+            <p>Welcome to the **EAFC 26 Player Analytics API** documentation website. This service is built with Node.js and Express.js, providing highly optimized endpoints to search, filter, analyze, and aggregate player ratings, playstyles, and stats from the EAFC 26 Men's Football Dataset.</p>
+            <p>Whether you're building a squad generator, comparison dashboard, mobile player database, or team builder chemistry app, this REST API provides the backend calculations, pagination filters, role-based controls, and security headers required to build premium products.</p>
+            
+            <div class="info-card warning">
+              <i class="fa-solid fa-circle-exclamation info-icon"></i>
+              <div class="info-content">
+                <strong>Local Development Host</strong>: Make sure the local Express server is running on `http://localhost:5000` (or your chosen PORT) to make real API requests from this playground.
+              </div>
+            </div>
+
+            <h3>Key Features</h3>
+            <ul>
+              <li><strong>MVC Architecture</strong>: Organized controller/model/route layout with Mongoose MongoDB mapping.</li>
+              <li><strong>Interactive Testing (Try It Out)</strong>: Execute API requests directly from this browser page. Toggle to Mock Mode to preview formatted responses even if the backend is local or offline.</li>
+              <li><strong>Role-Based Security (RBAC)</strong>: Endpoints are protected by JWT tokens with specific reader/writer permissions.</li>
+              <li><strong>Aggregation Analytics</strong>: Live team ratings, player distribution graphs, age statistics, and distribution metrics.</li>
+              <li><strong>Input Validation Layer</strong>: Joi validators verifying parameters, data shapes, and limits before executing queries.</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- 2. Installation -->
+        <section id="installation" class="doc-section">
+          <div class="section-header">
+            <span class="pre-title">Getting Setup</span>
+            <h2>2. Installation</h2>
+          </div>
+          <div class="section-body">
+            <p>Follow these steps to set up the development environment locally on your machine:</p>
+            
+            <div class="code-block-header">
+              <span>Terminal Setup Commands</span>
+              <button class="btn-copy-code" data-target="setup-code"><i class="fa-regular fa-copy"></i> Copy</button>
+            </div>
+            <pre><code id="setup-code" class="language-bash"># Clone or access the workspace project files
+cd eafc26_men_vidhi_mandaliya/backend
+
+# Install package dependencies
+npm install
+
+# Seed the database from local json dataset
+npm run seed
+
+# Run the server in development mode using nodemon
+npm run dev</code></pre>
+          </div>
+        </section>
+
+        <!-- 3. Environment Variables -->
+        <section id="env-vars" class="doc-section">
+          <div class="section-header">
+            <span class="pre-title">Configuration</span>
+            <h2>3. Environment Variables</h2>
+          </div>
+          <div class="section-body">
+            <p>Create a <code>.env</code> file in the backend root directory. Here are the environment variables used by the Express application:</p>
+            
+            <div class="code-block-header">
+              <span>.env template</span>
+              <button class="btn-copy-code" data-target="env-code"><i class="fa-regular fa-copy"></i> Copy</button>
+            </div>
+            <pre><code id="env-code" class="language-env">PORT=5000
+MONGO_URI=mongodb://127.0.0.1:27017/eafc26
+JWT_SECRET=your_super_secret_jwt_key_here
+JWT_EXPIRE=30d
+NODE_ENV=development</code></pre>
+          </div>
+        </section>
+
+        <!-- 4. Authentication Guide -->
+        <section id="auth-guide" class="doc-section">
+          <div class="section-header">
+            <span class="pre-title">Security</span>
+            <h2>4. Authentication & Authorization</h2>
+          </div>
+          <div class="section-body">
+            <p>This API uses JSON Web Token (JWT) authorization to secure mutating actions and administrative statistics dashboards.</p>
+            
+            <h3>JWT Header Scheme</h3>
+            <p>Include the token in the <code>Authorization</code> header using the standard Bearer scheme:</p>
+            <pre><code class="language-http">Authorization: Bearer <your_jwt_access_token></code></pre>
+
+            <div class="info-card note">
+              <i class="fa-solid fa-circle-info info-icon"></i>
+              <div class="info-content">
+                <strong>Permissions Configuration</strong>: The API defines specific permissions:
+                <ul>
+                  <li><code>READ_ANALYTICS</code>: Required for aggregating player ratings (Analytics APIs).</li>
+                  <li><code>WRITE_PLAYERS</code>: Required to perform CRUD inserts, updates, and deletes (POST/PUT/PATCH/DELETE /players).</li>
+                  <li><code>ACCESS_DASHBOARD</code>: Required for general stats and system logs (Admin APIs).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5. Rate Limiting -->
+        <section id="rate-limits" class="doc-section">
+          <div class="section-header">
+            <span class="pre-title">Traffic Guarding</span>
+            <h2>5. Rate Limiting</h2>
+          </div>
+          <div class="section-body">
+            <p>To prevent abuse and brute force attacks, the server limits clients' query frequency using <code>express-rate-limit</code>.</p>
+            
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Route Group</th>
+                    <th>Request Limit</th>
+                    <th>Window Time</th>
+                    <th>Default Response Code</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>General API (<code>/players</code>, etc.)</td>
+                    <td>100 requests</td>
+                    <td>15 minutes</td>
+                    <td>429 Too Many Requests</td>
+                  </tr>
+                  <tr>
+                    <td>Authentication (<code>/auth/login</code>, <code>/auth/register</code>)</td>
+                    <td>5 requests</td>
+                    <td>15 minutes</td>
+                    <td>429 Too Many Requests</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. Error Handling -->
+        <section id="errors" class="doc-section">
+          <div class="section-header">
+            <span class="pre-title">Exception Flow</span>
+            <h2>6. Error Handling</h2>
+          </div>
+          <div class="section-body">
+            <p>Errors are captured using a centralized error handler middleware. When an exception occurs, the response matches the standard JSON error payload schema:</p>
+            
+            <pre><code class="language-json">{
+  "success": false,
+  "message": "Error description message text",
+  "stack": "Stack trace (Only visible in Development mode)"
+}</code></pre>
+          </div>
+        </section>
+
+        <!-- 7. Validation Rules -->
+        <section id="val-rules" class="doc-section">
+          <div class="section-header">
+            <span class="pre-title">Data Validation</span>
+            <h2>7. Validation Rules</h2>
+          </div>
+          <div class="section-body">
+            <p>Incoming request body parameters and query structures are validated using <code>Joi</code> schemas. Failing to pass these constraints yields a <code>400 Bad Request</code> status showing which validation parameters failed.</p>
+            
+            <h3>Sample Limits:</h3>
+            <ul>
+              <li><strong>Overall Rating (OVR)</strong>: Integer between 1 and 99.</li>
+              <li><strong>Pace, Shooting, Passing, Dribbling, Defending, Physical</strong>: Integer between 1 and 99.</li>
+              <li><strong>Age</strong>: Integer between 15 and 50.</li>
+              <li><strong>Preferred Foot</strong>: Can only be "Left" or "Right".</li>
+              <li><strong>Gender</strong>: Can only be "Men" or "Women".</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- 8. Pagination, Sorting & Filtering -->
+        <section id="pagination-sorting-filtering" class="doc-section">
+          <div class="section-header">
+            <span class="pre-title">Data Fetching Patterns</span>
+            <h2>8. Pagination, Sorting & Filtering</h2>
+          </div>
+          <div class="section-body">
+            <p>Bulk queries support advanced pagination, query sorting, and parameter filters to paginate and format output data shapes.</p>
+            
+            <h3>Query Schema:</h3>
+            <ul>
+              <li><strong>Pagination</strong>: Use <code>page</code> (defaults to 1) and <code>limit</code> (defaults to 10) params to paginate collections.</li>
+              <li><strong>Sorting</strong>: Sort by attribute fields. Standard ascending format: <code>?sort=ovr</code>. For descending ratings, append the desc tag: <code>?sort=ovr-desc</code> (or <code>-ovr</code> depending on current model specifications).</li>
+              <li><strong>Filtering</strong>: Exact value matches on <code>team</code>, <code>league</code>, <code>nation</code>, <code>position</code>, <code>preferredFoot</code>, and range constraints using prefix boundaries (e.g. <code>minPace=90</code>).</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- 9. Query & Route Parameters -->
+        <section id="query-route-params" class="doc-section">
+          <div class="section-header">
+            <span class="pre-title">Parameters</span>
+            <h2>9. Query & Route Parameters</h2>
+          </div>
+          <div class="section-body">
+            <p>We split parameter captures into Route Parameters (captured via Express path slugs) and Query Parameters (passed as standard URL arguments).</p>
+            
+            <h3>Route Parameter Syntax:</h3>
+            <p>Route parameter values are embedded directly in the path (e.g. <code>/players/231747</code>, where <code>231747</code> is the ID route parameter).</p>
+            
+            <h3>Query Parameter Syntax:</h3>
+            <p>Query parameters follow standard URI formatting (e.g. <code>/players?team=Liverpool&minPace=85</code>).</p>
+          </div>
+        </section>
+
+        <!-- 10. Status Codes Reference -->
+        <section id="status-codes" class="doc-section">
+          <div class="section-header">
+            <span class="pre-title">HTTP Responses</span>
+            <h2>10. Status Codes Reference</h2>
+          </div>
+          <div class="section-body">
+            <p>The Player Analytics API communicates status details using standard HTTP codes:</p>
+            
+            <div class="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Status Code</th>
+                    <th>Message Definition</th>
+                    <th>Typical Cause</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="badge badge-success">200 OK</span></td>
+                    <td>Success</td>
+                    <td>Read or update query completed successfully.</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-success">201 Created</span></td>
+                    <td>Created</td>
+                    <td>Post request successfully registered records inside MongoDB.</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-danger">400 Bad Request</span></td>
+                    <td>Bad Request</td>
+                    <td>Validation fails on headers or body params.</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-danger">401 Unauthorized</span></td>
+                    <td>Unauthorized</td>
+                    <td>Missing or expired Bearer JWT authentication tokens.</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-danger">403 Forbidden</span></td>
+                    <td>Forbidden</td>
+                    <td>Authenticated credentials lack permissions for action.</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-danger">404 Not Found</span></td>
+                    <td>Not Found</td>
+                    <td>Requested ID or search term does not map to database records.</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-danger">429 Too Many Requests</span></td>
+                    <td>Throttled</td>
+                    <td>Rate limits exceeded. System rejects requests temporarily.</td>
+                  </tr>
+                  <tr>
+                    <td><span class="badge badge-danger">500 Internal Server</span></td>
+                    <td>Server Error</td>
+                    <td>Unexpected backend exceptions caught by Express global handler.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- 11. Deployment Guide -->
+        <section id="deployment" class="doc-section">
+          <div class="section-header">
+            <span class="pre-title">Going Live</span>
+            <h2>11. Deployment Guide</h2>
+          </div>
+          <div class="section-body">
+            <p>To deploy both the backend Express app and the documentation publicly, follow these general guidelines:</p>
+            
+            <h3>Express Backend App Deployment</h3>
+            <p>The Express backend can be deployed to services like Render, Heroku, or digital ocean droplets. Since it relies on MongoDB, connect it to a managed MongoDB instance (like MongoDB Atlas) by updating the <code>MONGO_URI</code> env variable.</p>
+
+            <h3>Static Documentation Deployment</h3>
+            <p>This documentation page is a standalone client-side website and can be deployed instantly using Surge.sh, Netlify, or GitHub Pages. Run the automated deployment script included in the codebase to push updates to live staging immediately.</p>
+          </div>
+        </section>
+
+        <!-- API Route Details (Injected Dynamically) -->
+        <div id="dynamic-route-details"></div>
+
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-content">
+      <p>&copy; 2026 EAFC 26 Player Analytics API. Generated with pride & styled beautifully.</p>
+      <div class="footer-links">
+        <a href="https://github.com" target="_blank"><i class="fa-brands fa-github"></i> GitHub Project</a>
+        <span class="separator">|</span>
+        <a href="#intro">Back to top</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Include generated route catalog and main script logic -->
+  <script src="routes_data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

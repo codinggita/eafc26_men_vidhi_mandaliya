@@ -12,7 +12,13 @@ const getAverageRating = asyncHandler(async (req, res) => {
   return ApiResponse.success(res, "Average rating retrieved successfully", { averageRating });
 });
 
+const getPlayersStats = asyncHandler(async (req, res) => {
+  const stats = await statsService.getPlayersCombinedStats();
+  return ApiResponse.success(res, "Player statistics retrieved successfully", stats);
+});
+
 module.exports = {
   getPlayerCount,
   getAverageRating,
+  getPlayersStats,
 };

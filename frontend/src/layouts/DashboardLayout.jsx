@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, Outlet } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../features/auth/authSlice';
 import { 
   FaChartBar, 
   FaUsers, 
@@ -20,18 +22,23 @@ const DashboardLayout = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   
   const location = useLocation();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
 
   const handleLogout = () => {
-    // Placeholder logout action
-    alert('Logout clicked (Placeholder)');
+    dispatch(logout());
   };
 
   const navItems = [
     { name: 'Dashboard', path: '/', icon: <FaChartBar /> },
     { name: 'Players', path: '/players', icon: <FaUsers /> },
     { name: 'Compare', path: '/compare', icon: <FaExchangeAlt /> },
-    { name: 'Admin Panel', path: '/admin', icon: <FaShieldAlt /> },
   ];
+
+  // Dynamically add Admin Panel link if user is admin
+  if (user?.role === 'admin') {
+    navItems.push({ name: 'Admin Panel', path: '/admin', icon: <FaShieldAlt /> });
+  }
 
   const isActive = (path) => {
     if (path === '/') {
@@ -90,12 +97,12 @@ const DashboardLayout = () => {
         </nav>
 
         {/* User profile summary in sidebar footer */}
-        {!isCollapsed && (
+        {!isCollapsed && user && (
           <div className="p-4 border-t border-slate-800 bg-slate-900/40 m-4 rounded-xl flex items-center gap-3">
             <FaUserCircle size={32} className="text-indigo-400" />
             <div className="overflow-hidden">
-              <p className="text-xs font-semibold text-white truncate">Administrator</p>
-              <p className="text-[10px] text-slate-500 truncate">admin@eafc.local</p>
+              <p className="text-xs font-semibold text-white truncate">{user.name}</p>
+              <p className="text-[10px] text-slate-500 truncate">{user.email}</p>
             </div>
           </div>
         )}
@@ -148,13 +155,15 @@ const DashboardLayout = () => {
           ))}
         </nav>
 
-        <div className="p-6 border-t border-slate-800 flex items-center gap-3">
-          <FaUserCircle size={36} className="text-indigo-400" />
-          <div>
-            <p className="text-sm font-semibold text-white">Administrator</p>
-            <p className="text-xs text-slate-500">admin@eafc.local</p>
+        {user && (
+          <div className="p-6 border-t border-slate-800 flex items-center gap-3">
+            <FaUserCircle size={36} className="text-indigo-400" />
+            <div>
+              <p className="text-sm font-semibold text-white">{user.name}</p>
+              <p className="text-xs text-slate-500">{user.email}</p>
+            </div>
           </div>
-        </div>
+        )}
       </aside>
 
       {/* Main Content Area */}
@@ -190,7 +199,7 @@ const DashboardLayout = () => {
                 className="flex items-center gap-3 hover:bg-slate-800/60 p-1.5 rounded-xl transition-all duration-200"
               >
                 <FaUserCircle size={26} className="text-indigo-400" />
-                <span className="hidden sm:inline text-sm font-semibold text-slate-200">Admin</span>
+                <span className="hidden sm:inline text-sm font-semibold text-slate-200">{user?.name || 'User'}</span>
               </button>
 
               {isProfileOpen && (
@@ -201,7 +210,7 @@ const DashboardLayout = () => {
                   />
                   <div className="absolute right-0 mt-2 w-48 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl py-2 z-20 animate-fade-in">
                     <div className="px-4 py-2 border-b border-slate-800">
-                      <p className="text-xs text-slate-500 font-mono">Role: SUPER_ADMIN</p>
+                      <p className="text-xs text-slate-500 font-mono">Role: {user?.role?.toUpperCase()}</p>
                     </div>
                     <Link 
                       to="#" 
@@ -212,7 +221,7 @@ const DashboardLayout = () => {
                     </Link>
                     <button 
                       onClick={() => { setIsProfileOpen(false); handleLogout(); }}
-                      className="w-full flex items-center gap-3 px-4 py-2 text-sm text-rose-400 hover:text-rose-300 hover:bg-rose-500/5 transition-colors border-t border-slate-800"
+                      className="w-full flex items-center gap-3 px-4 py-2 text-sm text-rose-400 hover:text-rose-300 hover:bg-rose-500/5 transition-colors border-t border-slate-800 cursor-pointer"
                     >
                       <FaSignOutAlt size={14} /> Logout
                     </button>
